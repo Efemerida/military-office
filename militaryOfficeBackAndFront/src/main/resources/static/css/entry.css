@@ -1,0 +1,24 @@
+.mainHead{
+    text-align: center;
+}
+
+.background{
+        text-align: center;
+        background-color: #EFEFEF;
+        height: 500px;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+
+}
+
+.button1{
+text-align: center;
+    border-radius: 95px;
+    background: #FFFFFF;
+    width: 20%;
+    height: 20%;
+    padding: 2%;
+    margin-top: 200px;
+    font-size: 22px;
+}

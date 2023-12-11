@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <!--    <link rel="stylesheet" href="../static/css/aboutMe.css">-->
+</head>
+<body>
+
+<!--Хэдэр-->
+<header>
+  <nav class="navbar bg-dark header"  data-bs-theme="dark">
+    <div class="container-fluid">
+      <a th:text="'Военкоматы России'" class="navbar-brand" href="#"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/aboutMe">Обо мне</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/getUsers">Граждане</a>
+          </li>
+          <li th:if="${role}==2" class="nav-item">
+            <a class="nav-link" href="/requests">Запросы граждан</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Выйти</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+
+
+<!--Боковое меню-->
+  <div class="container mt-5">
+    <div class="row align-items-start">
+      <div class="col col-md-4 border border-2 border-black p-0 mr-2">
+        <nav class="nav flex-column">
+          <div class="container">
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}(id=${id})}" href="#">Общая информация</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/parents(id=${id})}" href="#">Список ближайших родственников</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/service(id=${id})}" href="#">Список служб</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/awards(id=${id})}" href="#">Список наград</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/postponement(id=${id})}" href="#">Список отсрочек</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/subpoena(id=${id})}" href="#">Список призывов</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/medicalCard(id=${id})}" href="#">Медецинская карта</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/inspection(id=${id})}" href="#">Осмотры</a>
+            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/sizeForm(id=${id})}" href="#">Размер формы</a>
+          </div>
+          <div class="container border-top border-2 border-black m-0">
+            <a class="nav-link" th:if="${role}==2" th:href="@{/getUser/{id}/edit(id=${id})}">Изменить</a>
+            <a class="nav-link" th:if="${user.ISARCHIVE} and ${role}==2" th:href="@{/getUser/{id}/restore(id=${id})}">Восстановить</a>
+            <a class="nav-link" th:if="${!user.ISARCHIVE} and ${role}==2" th:href="@{/getUser/{id}/delete(id=${id})}">Удалить</a>
+            <a class="nav-link" href="/getUsers">Назад</a>
+          </div>
+        </nav>
+      </div>
+
+      <!--Общие данные-->
+      <div class="col">
+        <p th:if="${user.PATRONIMIC}!=null" th:text="'ФИО: ' + ${user.SURNAME} + ' ' + ${user.NAME} + ' '+ ${user.PATRONIMIC}"></p>
+        <p th:if="${user.PATRONIMIC}==null" th:text="'ФИО: ' + ${user.SURNAME} + ' ' + ${user.NAME}"></p>
+        <p th:text="'Дата рождения: ' + ${user.DATEOFBIRTH}"></p>
+        <p th:if="${user.GENDER}" th:text="'Пол: Мужской'"></p>
+        <p th:if="${!user.GENDER}" th:text="'Пол: Женский'"></p>
+        <p th:text="'Статус: ' + ${user.STATUS}"></p>
+        <p th:text="'Номер приписного/Военного билета: ' + ${user.STATUSCODE}"></p>
+        <p th:text="'Номер телефона: ' + ${user.PHONE}"></p>
+        <p th:text="'Военкомат: ' + ${user.MILITARYOFFICE}"></p>
+        <p th:text="'Семейное положение: ' + ${user.FAMILYSTATUS}"></p>
+        <p th:text="'Количетсво детей: ' + ${user.AMOUNTOFCHILDREN}"></p>
+        <p th:text="'Место рождения: ' + ${user.PLACEOFBIRTH}"></p>
+        <p th:text="'Адрес места жительства: ' + ${user.RESIDENCEADDRESS}"></p>
+        <p th:text="'Адрес фактического пребывания: ' + ${user.RESIDENCEADDRESSCURR}"></p>
+        <p th:text="'Индекс: ' + ${user.INDEX}"></p>
+        <p th:text="'Уровень образования: ' + ${user.LEVELOFEDUCATION}"></p>
+        <p th:if="${user.SPECIALITY!=null and not #strings.isEmpty(user.SPECIALITY)}" th:text="'Специальность: ' + ${user.SPECIALITY}"></p>
+        <p th:if="${user.PLACEOFCOLLECTION!=null and not #strings.isEmpty(user.PLACEOFCOLLECTION)}" th:text="'Место получения: ' + ${user.PLACEOFCOLLECTION}"></p>
+        <p th:if="${user.EXPIRATIONDATE!=null }" th:text="'Дата окончания: ' + ${user.EXPIRATIONDATE}"></p>
+        <p th:if="${user.PLACEOFWORK==null or #strings.isEmpty(user.PLACEOFWORK)}" th:text="'Место работы: Безработный'"></p>
+        <p th:if="${user.PLACEOFWORK!=null and not #strings.isEmpty(user.PLACEOFWORK)}" th:text="'Место работы: ' + ${user.PLACEOFWORK}"></p>
+        <p th:if="${user.SALARY!=0}" th:text="'Зарплата: ' + ${user.SALARY}"></p>
+        <p th:if="${user.JOBTITLE!=null and not #strings.isEmpty(user.JOBTITLE)} " th:text="'Должность: ' + ${JOBTITLE}"></p>
+        <p th:text="'Политические взгляды: ' + ${user.POLITICALVIEWS}"></p>
+        <p th:text="'Религиозные взгляды: ' + ${user.RELIGIOUSVIEWS}"></p>
+        <p th:if="${user.DRIVERISLICENSE!=null and not #strings.isEmpty(user.DRIVERISLICENSE)}" th:text="'Водительские права: ' + ${user.DRIVERISLICENSE}"></p>
+        <p th:if="${user.DRIVERISLICENSE==null or #strings.isEmpty(user.DRIVERISLICENSE)}" th:text="'Водительские права: Отсутсвуют'"></p>
+        <p th:if="${user.MILITARYSPECIALITY!=null  and not #strings.isEmpty(user.MILITARYSPECIALITY)}" th:text="'Военно-учетная специальность: ' + ${user.MILITARYSPECIALITY}"></p>
+        <p th:if="${user.MILITARYSPECIALITY==null or #strings.isEmpty(user.MILITARYSPECIALITY)}" th:text="'Военно-учетная специальность: Отсутсвует'"></p>
+        <p th:text="'Общее время службы: ' + ${user.EXPERIENCE} + ' месяцев'"></p>
+      </div>
+    </div>
+
+  </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+</body>
+</html>

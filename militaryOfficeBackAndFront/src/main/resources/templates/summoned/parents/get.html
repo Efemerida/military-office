@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Parent</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+<header>
+  <nav class="navbar bg-dark header"  data-bs-theme="dark">
+    <div class="container-fluid">
+      <a th:text="'Военкоматы России'" class="navbar-brand" href="#"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/summoned/aboutMe">Обо мне</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/summoned/users">Граждане</a>
+          </li>
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link" href="/requests">Запросы граждан</a>-->
+          <!--          </li>-->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Выйти</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class = "m-5">
+  <div>
+    <div class="container mt-5">
+      <div class="row align-items-start">
+        <div class="col col-md-4 border border-2 border-black p-0 mr-2">
+          <nav class="nav flex-column">
+            <div class="container">
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}(id=${id})}" href="#">Общая информация</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/parents(id=${id})}" href="#">Список ближайших родственников</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/service(id=${id})}" href="#">Список служб</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/awards(id=${id})}" href="#">Список наград</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/postponement(id=${id})}" href="#">Список отсрочек</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/subpoena(id=${id})}" href="#">Список призывов</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/medicalCard(id=${id})}" href="#">Медецинская карта</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/inspection(id=${id})}" href="#">Осмотры</a>
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/sizeForm(id=${id})}" href="#">Размер формы</a>
+            </div>
+            <div class="container border-top border-2 border-black m-0">
+              <a class="nav-link" aria-current="page" th:href="@{/summoned/user/{id}/parents/create(id=${id})}" href="#">Добавить родственника</a>
+              <a class="nav-link" th:href="@{/summoned/user/{id}(id=${id})}">Назад</a>
+            </div>
+          </nav>
+        </div>
+
+        <div th:if="${thereIs}" class="col bg-white">
+          <ul class="list-group list-group-numbered">
+            <li th:each="parent : ${parents}" class="list-group-item">
+              <h5>ФИО :</h5>
+              <p th:text="${parent.getSurname()} + ' ' + ${parent.getName()} + ' ' + ${parent.getPatronimic()}"></p>
+              <h5>Принадлежность :</h5>
+              <p th:text="${parent.getAffiliation()}"></p>
+              <h5>Дата рождения :</h5>
+              <p th:text="${parent.getDateOfBirth()}"></p>
+              <h5>Место работы  :</h5>
+              <p th:text="${parent.getPlaceOfWork()}"></p>
+              <h5>Должность :</h5>
+              <p th:text="${parent.getJobTitle()}"></p>
+              <h5>Место жительства  :</h5>
+              <p th:text="${parent.getResidenceAddress()}"></p>
+              <h5>Фактическое место жительства :</h5>
+              <p th:text="${parent.getResidenceAddressCurr()}"></p>
+              <h5>Номер телефона  :</h5>
+              <p th:text="${parent.getPhone()}"></p>
+              <div>
+                <form action="#" th:action="@{/summoned/user/{id}/parents(id=${id})}" th:object="${parent}" method="post">
+                  <input class="d-none" name="id" id="id" type="number" th:value="${parent.getId()}">
+                  <input class="d-none" name="NAME" id="NAME" type="text" th:value="${parent.getName()}">
+                  <input class="d-none" name="SURNAME" id="SURNAME" type="text" th:value="${parent.getSurname()}">
+                  <input class="d-none" name="PATRONIMIC" id="PATRONIMIC" type="text" th:value="${parent.getPatronimic()}">
+                  <input class="d-none" name="AFFILIATION" id="AFFILIATION" type="text" th:value="${parent.getAffiliation()}">
+                  <input class="d-none" name="DATEOFBIRTH" id="DATEOFBIRTH" type="date" th:value="${parent.getDateOfBirth()}">
+                  <input class="d-none" name="PLACEOFWORK" id="PLACEOFWORK" type="text" th:value="${parent.getPlaceOfWork()}">
+                  <input class="d-none" name="JOBTITLE" id="JOBTITLE" type="text" th:value="${parent.getJobTitle()}">
+                  <input class="d-none" name="RESIDENCEADDRESS" id="RESIDENCEADDRESS" type="text" th:value="${parent.getResidenceAddress()}">
+                  <input class="d-none" name="RESIDENCEADDRESSCURR" id="RESIDENCEADDRESSCURR" type="text" th:value="${parent.getResidenceAddressCurr()}">
+                  <input class="d-none" name="PHONE" id="PHONE" type="text" th:value="${parent.getPhone()}">
+                  <input class="d-none" name="IDUSER" id="IDUSER" type="number" th:value="${parent.getIdUser()}">
+                  <button type="submit" name="action" value="editParent">Изменить</button>
+                  <button type="submit" name="action" value="deleteParent" th:formaction="@{/summoned/user/{id}/parents/delete(id=${id})}">Удалить</button>
+                </form>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div th:if="!${thereIs}" class="col">
+          <h6>Данные отсутсвуют</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+</body>
+</html>

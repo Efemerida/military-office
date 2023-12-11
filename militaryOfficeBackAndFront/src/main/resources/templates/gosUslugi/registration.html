@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form th:method="POST" th:action="@{/gosuslugi/registration}" th:object="${account}">
+    <label for="login">Введите логин</label>
+    <input type="text" th:field="*{login}" id="login">
+    <br/>
+    <label for="password">Введите пароль</label>
+    <input type="password" th:field="*{password}" id="password">
+    <br/>
+    <label for="passport">Введите паспорт</label>
+    <input type="text" th:field="*{passport}" id="passport">
+    <br/>
+    <input type="submit" value="Зарегестрироваться">
+  </form>
+</body>
+</html>

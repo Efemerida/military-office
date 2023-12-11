@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CreateUser</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+
+<header>
+    <nav class="navbar bg-dark header"  data-bs-theme="dark">
+        <div class="container-fluid">
+            <a th:text="'Военкоматы России'" class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/user/aboutMe">Обо мне</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/getUsers">Граждане</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/requests">Запросы граждан</a>-->
+<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+    <!--Форма создания пользователя-->
+    <form class="col bg-white m-5" action="#" th:action="@{/createUser}" th:object="${user}" method="post">
+    <div th:text="${Date}"></div>
+
+
+
+        <!--Фамилия-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('SURNAME')}" th:errors="*{SURNAME}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Фамилия</label>
+            <div class="col-sm-10">
+                <input  th:field="*{SURNAME}" type="text" class="form-control" id="SURNAME">
+            </div>
+        </div><br>
+
+        <!--Имя-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('NAME')}" th:errors="*{NAME}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Имя</label>
+            <div class="col-sm-10">
+                <input  th:field="*{NAME}" type="text" class="form-control" id="NAME">
+            </div>
+        </div><br>
+
+        <!--Отчество-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Отчество</label>
+            <div class="col-sm-10">
+                <input  th:field="*{PATRONIMIC}" type="text" class="form-control" id="PATRONIMIC">
+            </div>
+        </div><br>
+
+        <!--Дата рождения-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('DATEOFBIRTH')}" th:errors="*{DATEOFBIRTH}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Дата рождения</label>
+            <div class="col-sm-10">
+                <input  th:field="*{DATEOFBIRTH}" type="date" class="form-control" id="DATEOFBIRTH">
+            </div>
+        </div><br>
+
+        <!--Пол-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('GENDER')}" th:errors="*{GENDER}"></div>
+        <div class="form-group row">
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Пол</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="MAN" th:field="*{GENDER}" th:value="1"  checked>
+                            <label class="form-check-label" for="MAN">
+                                Мужчина
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="WOMAN" th:field="*{GENDER}" th:value="1">
+                            <label class="form-check-label" for="WOMAN">
+                                Женщина
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div><br>
+
+        <!--Статус-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('STATUS')}" th:errors="*{STATUS}"></div>
+        <div class="form-group row">
+            <fieldset class="form-group">
+                <ul>
+                    <li th:each="st : ${statusList}">
+                        <input type="radio" th:field="*{STATUS}" th:value="${st.getValue()}" />
+                        <label th:for="${#ids.prev('STATUS')}" th:text="${st.getValue()}">Статус</label>
+                    </li>
+                </ul>
+            </fieldset>
+        </div><br>
+
+        <!--Номер приписного/военника-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('STATUSCODE')}" th:errors="*{STATUSCODE}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Номер приписного/военника</label>
+            <div class="col-sm-10">
+                <input  th:field="*{STATUSCODE}" type="text" class="form-control" id="STATUSCODE">
+            </div>
+        </div><br>
+
+        <!--Номер телефона-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('PHONE')}" th:errors="*{PHONE}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Номер телефона</label>
+            <div class="col-sm-10">
+                <input  th:field="*{PHONE}" type="text" class="form-control" id="PHONE">
+            </div>
+        </div><br>
+
+        <!--Военкомат-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('MILITARYOFFICE')}" th:errors="*{MILITARYOFFICE}"></div>
+        <div class="form-group col-md-4">
+            <label for="MILITARYOFFICE" class="col-sm-2 col-form-label">Военный коммисариат</label>
+            <select class="form-control" id="MILITARYOFFICE" th:name="testOrder" th:field="*{MILITARYOFFICE}">
+                <option value=null>Выберете военкомат</option>
+                <option th:each="office : ${offices}"
+                        th:value="${office}"
+                        th:text="${office}"></option>
+            </select>
+        </div><br>
+
+
+        <!--Семейное положение-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('FAMILYSTATUS')}" th:errors="*{FAMILYSTATUS}"></div>
+        <div class="form-group row">
+            <fieldset class="form-group">
+                <ul>
+                    <li th:each="st : ${familyStatusList}">
+                        <input type="radio" th:field="*{FAMILYSTATUS}" th:value="${st.getValue}" />
+                        <label th:for="${#ids.prev('FAMILYSTATUS')}" th:text="${st.getValue()}">Семейное положение</label>
+                    </li>
+                </ul>
+            </fieldset>
+        </div><br>
+
+        <!--Кол-во детей-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('AMOUNTOFCHILDREN')}" th:errors="*{AMOUNTOFCHILDREN}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Количество детей</label>
+            <div class="col-sm-10">
+                <input  th:field="*{AMOUNTOFCHILDREN}" type="text" class="form-control" id="AMOUNTOFCHILDREN">
+            </div>
+        </div><br>
+
+        <!--Место рождения-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('PLACEOFBIRTH')}" th:errors="*{PLACEOFBIRTH}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Место рождения</label>
+            <div class="col-sm-10">
+                <input  th:field="*{PLACEOFBIRTH}" type="text" class="form-control" id="PLACEOFBIRTH">
+            </div>
+        </div><br>
+
+        <!--Адрес места жительства-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('RESIDENCEADDRESS')}" th:errors="*{RESIDENCEADDRESS}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Адрес места жительства</label>
+            <div class="col-sm-10">
+                <input  th:field="*{RESIDENCEADDRESS}" type="text" class="form-control" id="RESIDENCEADDRESS">
+            </div>
+        </div><br>
+
+        <!--Адрес фактического пребывания-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('RESIDENCEADDRESSCURR')}" th:errors="*{RESIDENCEADDRESSCURR}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Адрес фактического пребывания</label>
+            <div class="col-sm-10">
+                <input  th:field="*{RESIDENCEADDRESSCURR}" type="text" class="form-control" id="RESIDENCEADDRESSCURR">
+            </div>
+        </div><br>
+
+        <!--Индекс-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('INDEX')}" th:errors="*{INDEX}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Индекс</label>
+            <div class="col-sm-10">
+                <input  th:field="*{INDEX}" type="text" class="form-control" id="INDEX">
+            </div>
+        </div><br>
+
+        <!--Уровень образования-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('LEVELOFEDUCATION')}" th:errors="*{LEVELOFEDUCATION}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Уровень образования</label>
+            <div class="col-sm-10">
+                <input  th:field="*{LEVELOFEDUCATION}" type="text" class="form-control" id="LEVELOFEDUCATION">
+            </div>
+        </div><br>
+
+        <!--Специальность-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Специальность</label>
+            <div class="col-sm-10">
+                <input  th:field="*{SPECIALITY}" type="text" class="form-control" id="SPECIALITY">
+            </div>
+        </div><br>
+
+        <!--Место получения-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Место получения</label>
+            <div class="col-sm-10">
+                <input  th:field="*{PLACEOFCOLLECTION}" type="text" class="form-control" id="PLACEOFCOLLECTION">
+            </div>
+        </div><br>
+
+        <!--Дата окончания-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Дата окончания</label>
+            <div class="col-sm-10">
+                <input  th:field="*{EXPIRATIONDATE}" type="date" class="form-control" id="EXPIRATIONDATE">
+            </div>
+        </div><br>
+
+        <!--Место работы-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Место работы</label>
+            <div class="col-sm-10">
+                <input  th:field="*{PLACEOFWORK}" type="text" class="form-control" id="PLACEOFWORK">
+            </div>
+        </div><br>
+
+        <!--Пасспорт-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('PASSPORT')}" th:errors="*{PASSPORT}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Пасспорт</label>
+            <div class="col-sm-10">
+                <input  th:field="*{PASSPORT}" type="text" class="form-control" id="PASSPORT">
+            </div>
+        </div><br>
+
+        <!--Должность-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Должность</label>
+            <div class="col-sm-10">
+                <input  th:field="*{JOBTITLE}" type="text" class="form-control" id="JOBTITLE">
+            </div>
+        </div><br>
+
+        <!--Зарплата-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('SALARY')}" th:errors="*{SALARY}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Зарплата</label>
+            <div class="col-sm-10">
+                <input  th:field="*{SALARY}" type="text" class="form-control" id="SALARY">
+            </div>
+        </div><br>
+
+        <!--Политические взгляды-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('POLITICALVIEWS')}" th:errors="*{POLITICALVIEWS}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Политические взгляды</label>
+            <div class="col-sm-10">
+                <input  th:field="*{POLITICALVIEWS}" type="text" class="form-control" id="POLITICALVIEWS">
+            </div>
+        </div><br>
+
+        <!--Религиозные взгляды-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('RELIGIOUSVIEWS')}" th:errors="*{RELIGIOUSVIEWS}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Религиозные взгляды</label>
+            <div class="col-sm-10">
+                <input  th:field="*{RELIGIOUSVIEWS}" type="text" class="form-control" id="RELIGIOUSVIEWS">
+            </div>
+        </div><br>
+
+        <!--Водительские права-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('DRIVERISLICENSE')}" th:errors="*{DRIVERISLICENSE}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Водительские права</label>
+            <div class="col-sm-10">
+                <input  th:field="*{DRIVERISLICENSE}" type="text" class="form-control" id="DRIVERISLICENSE">
+            </div>
+        </div><br>
+
+        <!--Военно-учетная специальность-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('MILITARYSPECIALITY')}" th:errors="*{MILITARYSPECIALITY}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Военно-учетная специальность</label>
+            <div class="col-sm-10">
+                <input  th:field="*{MILITARYSPECIALITY}" type="text" class="form-control" id="MILITARYSPECIALITY">
+            </div>
+        </div><br>
+
+        <!--Общее время службы-->
+        <div style="color: red; font-size: 12px" th:if="${#fields.hasErrors('EXPERIENCE')}" th:errors="*{EXPERIENCE}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Общее время службы</label>
+            <div class="col-sm-10">
+                <input  th:field="*{EXPERIENCE}" type="text" class="form-control" id="EXPERIENCE">
+            </div>
+        </div><br>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </div>
+        </div>
+
+    </form>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  th:action="@{/auth}" method="post">
+    <button class = "button1" name="action" type="submit" value="admin">Администратор</button>
+    <button class = "button1" name="action" type="submit" value="user">Пользователь</button>
+</form>
+
+</body>
+</html>
+<!--
+
+<button type="submit" name="action" value="save">save</button>
+<button type="submit" name="action" value="cancel">cancel</button>-->

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Parent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+<header  th:if="${isAdmin}==false" >
+    <nav class="navbar bg-dark header"  data-bs-theme="dark">
+        <div class="container-fluid">
+            <a th:text="'Военкоматы России'" class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/aboutMe">Обо мне</a>
+                    </li>
+                    <li class="d-flex nav-item">
+                        <a class="nav-link" href="/notification">Уведомления</a>
+                        <span th:if="${count!=0}" class="m-2 text-center badge bg-primary rounded-pill" th:text="${count}"></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/other">Другое</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<header  th:if="${isAdmin}" >
+    <nav class="navbar bg-dark header"  data-bs-theme="dark">
+        <div class="container-fluid">
+            <a th:text="'Военкоматы России'" class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/aboutMe">Обо мне</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/getUsers">Граждане</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/requests">Запросы граждан</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class = "m-5">
+
+    <div>
+        <div class="container mt-5">
+            <div class="row align-items-start">
+                <div th:if="${isAdmin}==false" class="col text-white col-md-4">
+                    <nav class="nav flex-column">
+                        <a class="nav-link active" aria-current="page" href="/aboutMe">Главная</a>
+                        <a class="nav-link" href="/aboutMe/postponement">Отсрочки</a>
+                        <a class="nav-link" href="/aboutMe/service">Данные о прохождении службы</a>
+                        <a class="nav-link" href="/aboutMe/subpoena">Повестки</a>
+                        <a class="nav-link" href="/aboutMe/medicalCard">Медецинская карта</a>
+                        <a class="nav-link" href="/aboutMe/inspection">Осмотры</a>
+                        <a class="nav-link" href="/aboutMe/parents">Ближайшие родственники</a>
+                        <a class="nav-link" href="/aboutMe/awards">Награды</a>
+                        <a class="nav-link" href="/aboutMe/sizeForm">Размеры формы</a>
+                    </nav>
+                </div>
+                <div th:if="${isAdmin}" class="col col-md-4 border border-2 border-black p-0 mr-2">
+                    <nav class="nav flex-column">
+                        <div class="container">
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}(id=${id})}" href="#">Общая информация</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/parents(id=${id})}" href="#">Список ближайших родственников</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/service(id=${id})}" href="#">Список служб</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/awards(id=${id})}" href="#">Список наград</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/postponement(id=${id})}" href="#">Список отсрочек</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/subpoena(id=${id})}" href="#">Список призывов</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/medicalCard(id=${id})}" href="#">Медецинская карта</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/inspection(id=${id})}" href="#">Осмотры</a>
+                            <a class="nav-link" aria-current="page" th:href="@{/getUser/{id}/sizeForm(id=${id})}" href="#">Размер формы</a>
+                        </div>
+                        <div class="container border-top border-2 border-black m-0">
+                            <a th:if="${role}==2" class="nav-link" aria-current="page" th:href="@{/getUser/{id}/subpoena/create(id=${id})}" href="#">Добавить призыв</a>
+                            <a class="nav-link" th:href="@{/getUser/{id}(id=${id})}">Назад</a>
+                        </div>
+                    </nav>
+                </div>
+
+
+                <div th:if="${thereIs}" class="col bg-white">
+                    <ul class="list-group list-group-numbered">
+                        <li th:each="subpoena : ${subpoenaList}" class="list-group-item">
+                            <h5>Номер повестки:</h5>
+                            <p th:text="${subpoena.ID}"></p>
+                            <h5>Дата получения:</h5>
+                            <p th:text="${subpoena.DATEOFDELIVERY}"></p>
+                            <h5>Дата явки:</h5>
+                            <p th:text="${subpoena.DATEOFATTENDANCE}"></p>
+                            <h5>Причина:</h5>
+                            <p th:text="${subpoena.REASON}"></p>
+                            <h5>Место явки:</h5>
+                            <p th:text="${subpoena.MilitaryOfficeNAME} + ' расположенный по адресу ' + ${subpoena.ADDRESS}" ></p>
+                            <div th:if="${role}==2">
+                                <form action="#" th:action="@{/getUser/{id}/subpoena(id=${id})}" th:object="${tmp}" method="post">
+                                    <input class="d-none" name="ID" id="ID" type="number" th:value="${subpoena.ID}">
+                                    <input class="d-none" name="DATEOFDELIVERY" id="DATEOFDELIVERY" type="date" th:value="${subpoena.DATEOFDELIVERY}">
+                                    <input class="d-none" name="DATEOFATTENDANCE" id="DATEOFATTENDANCE" type="date" th:value="${subpoena.DATEOFATTENDANCE}">
+                                    <input class="d-none" name="REASON" id="REASON" type="text" th:value="${subpoena.REASON}">
+                                    <input class="d-none" name="MilitaryOfficeNAME" id="MilitaryOfficeNAME" type="date" th:value="${subpoena.MilitaryOfficeNAME}">
+                                    <input class="d-none" name="ADDRESS" id="ADDRESS" type="text" th:value="${subpoena.ADDRESS}">
+                                    <input class="d-none" name="IDUSER" id="IDUSER" type="number" th:value="${subpoena.IDUSER}">
+                                    <button type="submit" name="action" value="editSubpoena">Изменить</button>
+                                    <button type="submit" name="action" value="deleteSubpoena" th:formaction="@{/getUser/{id}/subpoena/delete(id=${id})}">Удалить</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div th:if="!${thereIs}" class="col">
+                    <h6>Данные отсутсвуют</h6>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
