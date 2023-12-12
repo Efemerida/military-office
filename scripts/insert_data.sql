@@ -26,10 +26,18 @@ INSERT INTO public.inspection(
 	id, category, conclusion, date, doctor, id_user)
 	VALUES (1,'А','Здоров','2010-01-05',2,9);
 
+INSERT INTO public.inspection(
+	id, category, conclusion, date, doctor, id_user)
+	VALUES (2,'А','Здоров','2012-07-12',2,8);
+
 INSERT INTO public.medical_card(
 	id, category, chronic_diseases, diet, disability, height, mental_development, mental_disorders, physical_development, weight, id_user)
 	VALUES (1,'А','Отсутствуют','Стандартная','Отсутствуют',172,'Нормальное','Отсутствуют','Нормальное',70,9);
-	
+
+INSERT INTO public.medical_card(
+	id, category, chronic_diseases, diet, disability, height, mental_development, mental_disorders, physical_development, weight, id_user)
+	VALUES (2,'А','Отсутствуют','Стандартная','Отсутствуют',172,'Нормальное','Отсутствуют','Нормальное',79,8);
+
 INSERT INTO public.parent(
 	id, affiliation, date_of_birth, job_title, name, patronimic, phone, place_of_work, residence_address, residence_address_curr, surname, id_user)
 	VALUES 
@@ -44,13 +52,31 @@ INSERT INTO public.postponement(
 	id, date_of_acceptance, end_date, reason, id_user)
 	VALUES (1,'2016-06-08','2017-10-11','Надо',9);
 
+INSERT INTO public.postponement(
+	id, date_of_acceptance, end_date, reason, id_user)
+	VALUES (2,'2008-08-31','2012-06-13','Обучение',8);
+
 INSERT INTO public.service(
 	id, branch, date, form, job_title, military_unit, platoon, rota, "time", id_place, id_user)
 	VALUES (1,3,'2008-05-13','По призыву','Рядовой','3','412','2',12,1,9);
 	
+INSERT INTO public.service(
+	id, branch, date, form, job_title, military_unit, platoon, rota, "time", id_place, id_user)
+	VALUES (2,2,'2012-07-20','По призыву','Рядовой','3','4','2',12,1,8);
+
 INSERT INTO public.subpoena(
 	id, date_of_attendance, date_of_delivery, documents, reason, id_user, military_office_id)
 	VALUES (1,'2023-12-27','2023-12-11','Паспорт','Уточнение документов',9,1);
+
+INSERT INTO public.subpoena(
+	id, date_of_attendance, date_of_delivery, documents, reason, id_user, military_office_id)
+	VALUES (2,'2012-07-14','2012-07-08','Паспорт','Призыв на службу',8,1);
+
+
+INSERT INTO public.award(
+	id, date_of_receipt, name, reason, id_user)
+	VALUES (3,'2012-11-15','Орден хорошего парня 1 степени','Хороший парень',8);
+
 alter SEQUENCE public.account_id_seq
     INCREMENT 1
     START with 20
