@@ -7,7 +7,7 @@
 
 ```shell
 git clone https://github.com/Efemerida/military-office.git
-cd office/
+cd military-office/
 ```
 
 Для развёртывания у себя приложения воспользуйтесь командой:
