@@ -6,7 +6,7 @@
 Для начала работы клонируйте себе проект
 
 ```shell
-git clone https://github.com/Efemerida/office.git
+git clone https://github.com/Efemerida/military-office.git
 cd office/
 ```
 
